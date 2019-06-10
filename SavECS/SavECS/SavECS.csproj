@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7C089BBC-7E35-4C63-97E2-23E4AE7B3380}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>SavECS</RootNamespace>
     <AssemblyName>SavECS</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -54,6 +54,7 @@
     <Compile Include="Entities\ECSEntities.cs" />
     <Compile Include="Entities\ECSEntityBuffer.cs" />
     <Compile Include="Entities\ECSEntityData.cs" />
+    <Compile Include="Example.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\ECSSystems.cs" />
     <Compile Include="Systems\IECSSystem.cs" />
