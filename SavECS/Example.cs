@@ -127,6 +127,9 @@ namespace SavECS
             engine.AddComponent(entity, new PositionComponent());
             engine.AddComponent(entity, new VelocityComponent() { Velocity = new Vector3(0f, -1f, 0f) });
 
+            // init engine
+            engine.Init();
+
             while (true)
             {
                 // run engine
