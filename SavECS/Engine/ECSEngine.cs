@@ -21,8 +21,9 @@ public sealed class ECSEngine
             IECSSystem system = this.systems[i];
             ECSEntity[] entities = this.GetAllEntitiesWithComponents(system.Filters);
 
-            for (int entity = entities.Length - 1; entity >= 0; entity--)
+            for (int id = entities.Length - 1; id >= 0; id--)
             {
+                ECSEntity entity = entities[id];
                 system.Execute(this, entity);
             }
         }
