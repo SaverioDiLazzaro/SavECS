@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SavECS", "SavECS\SavECS.csproj", "{7C089BBC-7E35-4C63-97E2-23E4AE7B3380}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SavECS.Example", "SavECS.Example\SavECS.Example.csproj", "{BD480D88-9432-411A-936F-7746A8D9AEF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7C089BBC-7E35-4C63-97E2-23E4AE7B3380}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C089BBC-7E35-4C63-97E2-23E4AE7B3380}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C089BBC-7E35-4C63-97E2-23E4AE7B3380}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD480D88-9432-411A-936F-7746A8D9AEF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD480D88-9432-411A-936F-7746A8D9AEF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD480D88-9432-411A-936F-7746A8D9AEF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD480D88-9432-411A-936F-7746A8D9AEF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

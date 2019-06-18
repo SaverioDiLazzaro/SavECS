@@ -1,0 +1,4 @@
+﻿public enum RenderOffset
+{
+    Player
+}
