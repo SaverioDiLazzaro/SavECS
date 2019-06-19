@@ -48,8 +48,8 @@ public class AISpawnSystem : IECSSystem
                 new SpriteRendererComponent()
                 {
                     RenderOffset = RenderOffset.Player,
-                    Texture = new Texture(@"Assets\Player.png"),
-                    Sprite = new Sprite(1f, 1f) { pivot = Vector2.One * 0.5f, Rotation = (float)Math.PI }
+                    Texture = new Texture(@"Assets\EnemyBlack2.png"),
+                    Sprite = new Sprite(1f, 1f) { pivot = Vector2.One * 0.5f }
                 });
 
             engine.AddComponent<AIComponent>(enemy, new AIComponent());
