@@ -2,5 +2,6 @@
 {
     Input,
     Update,
+    LateUpdate,
     Render,
 }

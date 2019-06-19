@@ -122,10 +122,6 @@ namespace SavECS
             // create engine
             ECSEngine engine = new ECSEngine();
 
-            // register components
-            engine.RegisterComponent<PositionComponent>();
-            engine.RegisterComponent<VelocityComponent>();
-
             // add systems
             MoveSystem moveSystem = new MoveSystem();
             engine.AddSystem(moveSystem);

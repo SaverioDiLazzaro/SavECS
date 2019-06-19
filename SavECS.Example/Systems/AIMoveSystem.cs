@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class MoveSystem : IECSSystem
+public class AIMoveSystem : IECSSystem
 {
     Type[] IECSSystem.Filters => new Type[]
     {
@@ -9,7 +9,7 @@ public class MoveSystem : IECSSystem
         typeof(AIComponent)
     };
 
-    int IECSSystem.ExecutionOrder => (int)SystemExecutionOrder.Update;
+    int IECSSystem.ExecutionOrder => (int)SystemExecutionOrder.LateUpdate;
 
     void IECSSystem.Execute(ECSEngine engine, int entity)
     {

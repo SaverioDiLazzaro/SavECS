@@ -50,15 +50,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\NameComponent.cs" />
+    <Compile Include="Components\EntityHolderComponent.cs" />
     <Compile Include="Enums\RenderOffset.cs" />
     <Compile Include="Components\SpriteRendererComponent.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Components\InputReceiverComponent.cs" />
     <Compile Include="Components\SpawnPointComponent.cs" />
     <Compile Include="Components\AIComponent.cs" />
-    <Compile Include="Systems\MoveSystem.cs" />
-    <Compile Include="Systems\SpawnSystem.cs" />
-    <Compile Include="Systems\InputSystem.cs" />
+    <Compile Include="Systems\AIMoveSystem.cs" />
+    <Compile Include="Systems\FollowEntityPositionSystem.cs" />
+    <Compile Include="Systems\PlayerShootSystem.cs" />
+    <Compile Include="Systems\AISpawnSystem.cs" />
+    <Compile Include="Systems\PlayerMoveSystem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\PositionComponent.cs" />
@@ -72,6 +75,7 @@
     <Compile Include="Utils\Input\JoystickButton.cs" />
     <Compile Include="Utils\Input\JoystickIndex.cs" />
     <Compile Include="Utils\Input\MouseButton.cs" />
+    <Compile Include="Components\WeaponComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

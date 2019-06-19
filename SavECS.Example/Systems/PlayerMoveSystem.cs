@@ -1,7 +1,7 @@
 ﻿using Aiv.Fast2D;
 using System;
 
-public class InputSystem : IECSSystem
+public class PlayerMoveSystem : IECSSystem
 {
     Type[] IECSSystem.Filters => new Type[]
     {

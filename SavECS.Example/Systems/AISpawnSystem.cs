@@ -2,7 +2,7 @@
 using OpenTK;
 using System;
 
-internal class SpawnSystem : IECSSystem
+public class AISpawnSystem : IECSSystem
 {
     Type[] IECSSystem.Filters => new Type[]
     {

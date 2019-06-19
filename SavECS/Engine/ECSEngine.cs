@@ -126,12 +126,14 @@ public sealed class ECSEngine
     #endregion
 
     #region Components
-    public void RegisterComponent<T>() where T : struct, IECSComponent
+    private void RegisterComponent<T>() where T : struct, IECSComponent
     {
         this.components.RegisterComponent<T>();
     }
     public void AddComponent<T>(ECSEntity entity, T component) where T : struct, IECSComponent
     {
+        this.RegisterComponent<T>();
+
         ECSEntityIndex index = this.components.AddComponent(entity, component);
         entities.AddComponent(entity, component, index);
     }

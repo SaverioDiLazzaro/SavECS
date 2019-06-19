@@ -9,8 +9,12 @@ internal sealed class ECSComponents : Dictionary<Type, IECSComponentBuffer>
     internal void RegisterComponent<T>() where T : struct, IECSComponent
     {
         Type type = typeof(T);
-        IECSComponentBuffer buffer = new ECSComponentBuffer<T>();
-        this.Add(type, buffer);
+
+        if (!this.ContainsKey(type))
+        {
+            IECSComponentBuffer buffer = new ECSComponentBuffer<T>();
+            this.Add(type, buffer);
+        }
     }
     internal ECSEntityIndex AddComponent<T>(ECSEntity entity, T component) where T : struct, IECSComponent
     {
