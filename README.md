@@ -88,13 +88,13 @@ namespace SavECS
             // set data
             engine.SetComponent(entity, pc);
 
-            Debug.Log("Entity: " + entity, ConsoleColor.Green);
-            Debug.Log("Pos: " + pc.Position);
+            Debug.Log("Entity: " + entity + " - Pos: " + pc.Position, ConsoleColor.Green, entity);
 
             // other operations
             if (pc.Position.y < -10)
             {
-                Debug.Log("Destroying: " + entity, ConsoleColor.Red);
+                Console.Clear();
+                Debug.Log("Destroyed: " + entity, ConsoleColor.Red, entity);
 
                 // destroy entities
                 engine.DestroyEntity(entity);
@@ -104,11 +104,21 @@ namespace SavECS
 
     class Debug
     {
-        internal static void Log(string message, ConsoleColor color = ConsoleColor.White)
+        internal static void Log(string message, ConsoleColor color = ConsoleColor.White, int location = -1)
         {
-            Console.ForegroundColor = color;
-            Console.WriteLine(message);
-            Console.ResetColor();
+            if(location >= 0)
+            {
+                Console.SetCursorPosition(0, location);
+                Console.ForegroundColor = color;
+                Console.WriteLine(message);
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = color;
+                Console.WriteLine(message);
+                Console.ResetColor();
+            }
         }
     }
 
@@ -119,24 +129,27 @@ namespace SavECS
             // create engine
             ECSEngine engine = new ECSEngine();
 
-            // register components
-            engine.RegisterComponent<PositionComponent>();
-            engine.RegisterComponent<VelocityComponent>();
+            // register components (NO MORE NEEDED)
+            //engine.RegisterComponent<PositionComponent>();
+            //engine.RegisterComponent<VelocityComponent>();
 
             // add systems
             MoveSystem moveSystem = new MoveSystem();
             engine.AddSystem(moveSystem);
 
-            // create entities
-            ECSEntity entity = engine.CreateEntity();
+            for (int i = 0; i < 5; i++)
+            {
+                // create entities
+                ECSEntity entity = engine.CreateEntity();
 
-            // add components
-            engine.AddComponent(entity, new PositionComponent());
-            engine.AddComponent(entity, new VelocityComponent() { Velocity = new Vector3(0f, -1f, 0f) });
+                // add components
+                engine.AddComponent(entity, new PositionComponent());
+                engine.AddComponent(entity, new VelocityComponent() { Velocity = new Vector3(0f, -1f * (i + 1), 0f) });
+            }
 
             // init engine
             engine.Init();
-            
+
             while (true)
             {
                 // run engine
