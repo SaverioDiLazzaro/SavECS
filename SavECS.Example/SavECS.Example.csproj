@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Components\NameComponent.cs" />
     <Compile Include="Components\EntityHolderComponent.cs" />
+    <Compile Include="Systems\DestroyEntityWhenOutOfScreenSystem.cs" />
     <Compile Include="Enums\RenderOffset.cs" />
     <Compile Include="Components\SpriteRendererComponent.cs" />
     <Compile Include="Game.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Systems\SpriteRendererSystem.cs" />
     <Compile Include="Components\VelocityComponent.cs" />
     <Compile Include="Components\TimeComponent.cs" />
+    <Compile Include="Utils\TextureManager.cs" />
     <Compile Include="Utils\Time.cs" />
     <Compile Include="Utils\Input\ButtonState.cs" />
     <Compile Include="Utils\Input\Input.cs" />

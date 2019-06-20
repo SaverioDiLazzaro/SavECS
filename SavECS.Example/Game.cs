@@ -11,17 +11,29 @@ public static class Game
     public static Window Window = new Window(500, 800, "Game");
     public static Random Random = new Random();
 
+    public static int FrameCount;
+    public static string FPS;
+
     public static void Init()
     {
         // init window
         Game.Window.SetDefaultOrthographicSize(20f);
 
+        // add textures
+        TextureManager.AddTexture("Player", new Texture(@"Assets\Player.png"));
+        TextureManager.AddTexture("EnemyBlack2", new Texture(@"Assets\EnemyBlack2.png"));
+        TextureManager.AddTexture("LaserRed01", new Texture(@"Assets\LaserRed01.png"));
+
         //add systems
         engine.AddSystem(new PlayerMoveSystem());
         engine.AddSystem(new PlayerShootSystem());
+
         engine.AddSystem(new AISpawnSystem());
         engine.AddSystem(new AIMoveSystem());
+
         engine.AddSystem(new FollowEntityPositionSystem());
+        engine.AddSystem(new DestroyEntityWhenOutOfScreenSystem());
+
         engine.AddSystem(new SpriteRendererSystem());
 
         //create entities & add components
@@ -42,7 +54,7 @@ public static class Game
             new SpriteRendererComponent()
             {
                 RenderOffset = RenderOffset.Player,
-                Texture = new Texture(@"Assets\Player.png"),
+                Texture = TextureManager.GetTexture("Player"),
                 Sprite = new Sprite(1f, 1f) { pivot = Vector2.One * 0.5f }
             });
         #endregion
@@ -56,7 +68,7 @@ public static class Game
         #endregion
 
         #region EnemySpawner(s)
-        int spawnersCount = 5;
+        int spawnersCount = 500;
         float step = Game.Window.OrthoWidth / (float)(spawnersCount + 1);
         float offset = -1f;
 
@@ -94,10 +106,23 @@ public static class Game
     {
         while (Game.Window.opened)
         {
+            Game.FrameCount++;
+
             Input.Update(Game.Window);
 
             // run engine
             Game.engine.Run();
+
+            var entities = "Entities: " + Game.engine.EntitiesCount;
+
+            if (Game.FrameCount % 10 == 0)
+            {
+                Game.FPS = (1f / Game.Window.deltaTime).ToString();
+            }
+          
+            var fps = "\tFPS: " + Game.FPS;
+
+            Console.WriteLine(entities + fps);
 
             // update window
             Game.Window.Update();

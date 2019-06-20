@@ -46,7 +46,7 @@ public class PlayerShootSystem : IECSSystem
                 new SpriteRendererComponent()
                 {
                     RenderOffset = RenderOffset.Player,
-                    Texture = new Texture(@"Assets\LaserRed01.png"),
+                    Texture = TextureManager.GetTexture("LaserRed01"),
                     Sprite = new Sprite(0.1f, 1f) { pivot = new Vector2(0.1f, 0.5f) }
                 });
 

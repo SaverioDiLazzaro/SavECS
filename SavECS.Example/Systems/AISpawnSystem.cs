@@ -48,7 +48,7 @@ public class AISpawnSystem : IECSSystem
                 new SpriteRendererComponent()
                 {
                     RenderOffset = RenderOffset.Player,
-                    Texture = new Texture(@"Assets\EnemyBlack2.png"),
+                    Texture = TextureManager.GetTexture("EnemyBlack2"),
                     Sprite = new Sprite(1f, 1f) { pivot = Vector2.One * 0.5f }
                 });
 

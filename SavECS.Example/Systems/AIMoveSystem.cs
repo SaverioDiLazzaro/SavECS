@@ -9,7 +9,7 @@ public class AIMoveSystem : IECSSystem
         typeof(AIComponent)
     };
 
-    int IECSSystem.ExecutionOrder => (int)SystemExecutionOrder.LateUpdate;
+    int IECSSystem.ExecutionOrder => (int)SystemExecutionOrder.Update;
 
     void IECSSystem.Execute(ECSEngine engine, int entity)
     {

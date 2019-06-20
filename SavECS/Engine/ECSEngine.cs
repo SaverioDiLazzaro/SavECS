@@ -9,6 +9,8 @@ public sealed class ECSEngine
     private readonly ECSEntities entities = new ECSEntities();
     private readonly ECSSystems systems = new ECSSystems();
 
+    public int EntitiesCount { get { return entities.Count; } }
+
     #region Engine
     public void Init()
     {
