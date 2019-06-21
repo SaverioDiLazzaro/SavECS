@@ -17,7 +17,15 @@ public class CollisionSolverSystem : IECSSystem
         {
             ECSEntity entity = entities[i];
 
+            CollisionDataComponent cdc = engine.GetComponent<CollisionDataComponent>(entity);
+
+            ECSEntity entity1 = cdc.Entity1;
+            ECSEntity entity2 = cdc.Entity2;
+
             engine.DestroyEntity(entity);
+
+            engine.DestroyEntity(entity1);
+            engine.DestroyEntity(entity2);
         }
     }
 }

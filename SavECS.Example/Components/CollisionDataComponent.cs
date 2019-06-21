@@ -2,5 +2,6 @@
 
 public struct CollisionDataComponent : IECSComponent
 {
-    //public ECSEntity Other;
+    public ECSEntity Entity1;
+    public ECSEntity Entity2;
 }

@@ -39,8 +39,9 @@ public class CollisionDetectionSystem : IECSSystem
 
                     if(this.Intersect(box1ExtentMin, box1ExtentMax, box2ExtentMin, box2ExtentMax))
                     {
-                        engine.AddComponent(entity1, new CollisionDataComponent() { /*Other = entity2*/ });
-                        engine.AddComponent(entity2, new CollisionDataComponent() { /*Other = entity1*/ });
+                        ECSEntity collisionDataEntity = engine.CreateEntity();
+
+                        engine.AddComponent(collisionDataEntity, new CollisionDataComponent() { Entity1 = entity1, Entity2 = entity2 });
                     }
                 }
             }
