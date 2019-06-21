@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using ECSEntity = System.Int32;
 
 public class SpriteRendererSystem : IECSSystem
 {
@@ -14,14 +12,19 @@ public class SpriteRendererSystem : IECSSystem
 
     int IECSSystem.ExecutionOrder => (int)SystemExecutionOrder.Render;
 
-    void IECSSystem.Execute(ECSEngine engine, int entity)
+    void IECSSystem.Execute(ECSEngine engine, ECSEntity[] entities)
     {
-        PositionComponent pc = engine.GetComponent<PositionComponent>(entity);
-        SpriteRendererComponent src = engine.GetComponent<SpriteRendererComponent>(entity);
+        for (int i = 0; i < entities.Length; i++)
+        {
+            ECSEntity entity = entities[i];
 
-        src.Sprite.position = pc.Position;
-        engine.SetComponent<SpriteRendererComponent>(entity, src);
+            PositionComponent pc = engine.GetComponent<PositionComponent>(entity);
+            SpriteRendererComponent src = engine.GetComponent<SpriteRendererComponent>(entity);
 
-        src.Sprite.DrawTexture(src.Texture);
+            src.Sprite.position = pc.Position;
+            engine.SetComponent<SpriteRendererComponent>(entity, src);
+
+            src.Sprite.DrawTexture(src.Texture);
+        }
     }
 }

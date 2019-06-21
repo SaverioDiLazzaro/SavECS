@@ -1,6 +1,9 @@
-﻿using Aiv.Fast2D;
+﻿using System;
+
+using Aiv.Fast2D;
 using OpenTK;
-using System;
+
+using ECSEntity = System.Int32;
 
 public class AISpawnSystem : IECSSystem
 {
@@ -12,49 +15,56 @@ public class AISpawnSystem : IECSSystem
 
     int IECSSystem.ExecutionOrder => (int)SystemExecutionOrder.Update;
 
-    void IECSSystem.Execute(ECSEngine engine, int entity)
+    void IECSSystem.Execute(ECSEngine engine, ECSEntity[] entities)
     {
-        TimeComponent tc = engine.GetComponent<TimeComponent>(entity);
-
-        tc.CurrentTime -= Time.DeltaTime;
-
-        if(tc.CurrentTime <= 0f)
+        for (int i = 0; i < entities.Length; i++)
         {
-            tc.CurrentTime += tc.Time;
+            ECSEntity entity = entities[i];
 
-            SpawnPointComponent pc = engine.GetComponent<SpawnPointComponent>(entity); 
+            TimeComponent tc = engine.GetComponent<TimeComponent>(entity);
 
-            var enemy = engine.CreateEntity();
+            tc.CurrentTime -= Time.DeltaTime;
 
-            engine.AddComponent<NameComponent>(enemy,
-                new NameComponent()
-                {
-                    Name = "ENEMY"
-                });
+            if (tc.CurrentTime <= 0f)
+            {
+                tc.CurrentTime += tc.Time;
 
-            engine.AddComponent<PositionComponent>(enemy,
-                new PositionComponent()
-                {
-                    Position = pc.SpawnPoint
-                });
+                SpawnPointComponent pc = engine.GetComponent<SpawnPointComponent>(entity);
 
-            engine.AddComponent<VelocityComponent>(enemy,
-                new VelocityComponent()
-                {
-                    Velocity = new Vector2(0f, 5f)
-                });
+                var enemy = engine.CreateEntity();
 
-            engine.AddComponent<SpriteRendererComponent>(enemy,
-                new SpriteRendererComponent()
-                {
-                    RenderOffset = RenderOffset.Player,
-                    Texture = TextureManager.GetTexture("EnemyBlack2"),
-                    Sprite = new Sprite(1f, 1f) { pivot = Vector2.One * 0.5f }
-                });
+                engine.AddComponent<NameComponent>(enemy,
+                    new NameComponent()
+                    {
+                        Name = "ENEMY"
+                    });
 
-            engine.AddComponent<AIComponent>(enemy, new AIComponent());
+                engine.AddComponent<PositionComponent>(enemy,
+                    new PositionComponent()
+                    {
+                        Position = pc.SpawnPoint
+                    });
+
+                engine.AddComponent<VelocityComponent>(enemy,
+                    new VelocityComponent()
+                    {
+                        Velocity = new Vector2(0f, 5f)
+                    });
+
+                engine.AddComponent(enemy, new BoxColliderComponent() { Size = new Vector2(1f, 1f) });
+
+                engine.AddComponent<SpriteRendererComponent>(enemy,
+                    new SpriteRendererComponent()
+                    {
+                        RenderOffset = RenderOffset.Player,
+                        Texture = TextureManager.GetTexture("EnemyBlack2"),
+                        Sprite = new Sprite(1f, 1f) { pivot = Vector2.One * 0.5f }
+                    });
+
+                engine.AddComponent<AIComponent>(enemy, new AIComponent());
+            }
+
+            engine.SetComponent<TimeComponent>(entity, tc);
         }
-
-        engine.SetComponent<TimeComponent>(entity, tc);
     }
 }

@@ -69,28 +69,34 @@ namespace SavECS
         int IECSSystem.ExecutionOrder { get { return 0; } }
 
         // system execution
-        void IECSSystem.Execute(ECSEngine engine, ECSEntity entity)
+        void IECSSystem.Execute(ECSEngine engine, ECSEntity[] entities)
         {
-            // get data
-            PositionComponent pc = engine.GetComponent<PositionComponent>(entity);
-            VelocityComponent vc = engine.GetComponent<VelocityComponent>(entity);
-
-            // manipulate data
-            pc.Position += vc.Velocity * Time.DeltaTime;
-
-            // set data
-            engine.SetComponent(entity, pc);
-
-            Debug.Log("Entity: " + entity + " - Pos: " + pc.Position, ConsoleColor.Green, entity);
-
-            // other operations
-            if (pc.Position.y < -10)
+            for (int i = 0; i < entities.Length; i++)
             {
-                Console.Clear();
-                Debug.Log("Destroyed: " + entity, ConsoleColor.Red, entity);
+                //get entity
+                ECSEntity entity = entities[i];
 
-                // destroy entities
-                engine.DestroyEntity(entity);
+                // get data
+                PositionComponent pc = engine.GetComponent<PositionComponent>(entity);
+                VelocityComponent vc = engine.GetComponent<VelocityComponent>(entity);
+
+                // manipulate data
+                pc.Position += vc.Velocity * Time.DeltaTime;
+
+                // set data
+                engine.SetComponent(entity, pc);
+
+                Debug.Log("Entity: " + entity + " - Pos: " + pc.Position, ConsoleColor.Green, entity);
+
+                // other operations
+                if (pc.Position.y < -10)
+                {
+                    Console.Clear();
+                    Debug.Log("Destroyed: " + entity, ConsoleColor.Red, entity);
+
+                    // destroy entities
+                    engine.DestroyEntity(entity);
+                }
             }
         }
     }

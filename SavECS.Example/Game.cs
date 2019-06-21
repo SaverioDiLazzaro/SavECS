@@ -31,8 +31,10 @@ public static class Game
         engine.AddSystem(new AISpawnSystem());
         engine.AddSystem(new AIMoveSystem());
 
-        engine.AddSystem(new FollowEntityPositionSystem());
         engine.AddSystem(new DestroyEntityWhenOutOfScreenSystem());
+
+        engine.AddSystem(new CollisionDetectionSystem());
+        engine.AddSystem(new CollisionSolverSystem());
 
         engine.AddSystem(new SpriteRendererSystem());
 
@@ -43,32 +45,21 @@ public static class Game
         var halfOrthoSize = Game.Window.CurrentOrthoGraphicSize * 0.5f;
 
         engine.AddComponent(player, new NameComponent() { Name = "PLAYER" });
-
         engine.AddComponent(player, new InputReceiverComponent());
-
         engine.AddComponent(player, new PositionComponent() { Position = new Vector2(halfOrthoSize * Window.aspectRatio, halfOrthoSize * 1.5f) });
-
         engine.AddComponent(player, new VelocityComponent() { Velocity = new Vector2(5f, 5f) });
-
-        engine.AddComponent(player,
-            new SpriteRendererComponent()
+        engine.AddComponent(player, new BoxColliderComponent() { Size = new Vector2(1f, 1f) });
+        engine.AddComponent(player, new SpriteRendererComponent()
             {
                 RenderOffset = RenderOffset.Player,
                 Texture = TextureManager.GetTexture("Player"),
                 Sprite = new Sprite(1f, 1f) { pivot = Vector2.One * 0.5f }
             });
-        #endregion
-
-        #region Weapon (Player)
-        ECSEntity playerWeapon = engine.CreateEntity();
-        engine.AddComponent(playerWeapon, new InputReceiverComponent());
-        engine.AddComponent(playerWeapon, new PositionComponent());
-        engine.AddComponent(playerWeapon, new WeaponComponent() { BulletSpawnOffset = new Vector2(0f, -1f) });
-        engine.AddComponent(playerWeapon, new EntityHolderComponent() { Entity = player });
+        engine.AddComponent(player, new WeaponComponent() { BulletSpawnOffset = new Vector2(0f, -1f) });
         #endregion
 
         #region EnemySpawner(s)
-        int spawnersCount = 500;
+        int spawnersCount = 5;
         float step = Game.Window.OrthoWidth / (float)(spawnersCount + 1);
         float offset = -1f;
 
@@ -122,7 +113,7 @@ public static class Game
           
             var fps = "\tFPS: " + Game.FPS;
 
-            Console.WriteLine(entities + fps);
+            //Console.WriteLine(entities + fps);
 
             // update window
             Game.Window.Update();

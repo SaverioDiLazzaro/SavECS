@@ -1,5 +1,7 @@
 ﻿using System;
 
+using ECSEntity = System.Int32;
+
 public class AIMoveSystem : IECSSystem
 {
     Type[] IECSSystem.Filters => new Type[]
@@ -11,13 +13,18 @@ public class AIMoveSystem : IECSSystem
 
     int IECSSystem.ExecutionOrder => (int)SystemExecutionOrder.Update;
 
-    void IECSSystem.Execute(ECSEngine engine, int entity)
+    void IECSSystem.Execute(ECSEngine engine, ECSEntity[] entities)
     {
-        PositionComponent pc = engine.GetComponent<PositionComponent>(entity);
-        VelocityComponent vc = engine.GetComponent<VelocityComponent>(entity);
+        for (int i = 0; i < entities.Length; i++)
+        {
+            ECSEntity entity = entities[i];
 
-        pc.Position += vc.Velocity * Time.DeltaTime;
+            PositionComponent pc = engine.GetComponent<PositionComponent>(entity);
+            VelocityComponent vc = engine.GetComponent<VelocityComponent>(entity);
 
-        engine.SetComponent<PositionComponent>(entity, pc);
+            pc.Position += vc.Velocity * Time.DeltaTime;
+
+            engine.SetComponent<PositionComponent>(entity, pc);
+        }
     }
 }

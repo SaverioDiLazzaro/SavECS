@@ -3,5 +3,6 @@
     Input,
     Update,
     LateUpdate,
+    Physics,
     Render,
 }

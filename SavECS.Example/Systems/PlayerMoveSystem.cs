@@ -1,5 +1,8 @@
-﻿using Aiv.Fast2D;
-using System;
+﻿using System;
+
+using Aiv.Fast2D;
+
+using ECSEntity = System.Int32;
 
 public class PlayerMoveSystem : IECSSystem
 {
@@ -12,31 +15,36 @@ public class PlayerMoveSystem : IECSSystem
 
     int IECSSystem.ExecutionOrder => (int)SystemExecutionOrder.Input;
 
-    void IECSSystem.Execute(ECSEngine engine, int entity)
+    void IECSSystem.Execute(ECSEngine engine, ECSEntity[] entities)
     {
-        PositionComponent pc = engine.GetComponent<PositionComponent>(entity);
-        VelocityComponent vc = engine.GetComponent<VelocityComponent>(entity);
-
-        if (Input.IsKeyPressed(KeyCode.W))
+        for (int i = 0; i < entities.Length; i++)
         {
-            pc.Position.Y -= vc.Velocity.Y * Time.DeltaTime;
-        }
+            ECSEntity entity = entities[i];
 
-        if (Input.IsKeyPressed(KeyCode.S))
-        {
-            pc.Position.Y += vc.Velocity.Y * Time.DeltaTime;
-        }
+            PositionComponent pc = engine.GetComponent<PositionComponent>(entity);
+            VelocityComponent vc = engine.GetComponent<VelocityComponent>(entity);
 
-        if (Input.IsKeyPressed(KeyCode.A))
-        {
-            pc.Position.X -= vc.Velocity.X * Time.DeltaTime;
-        }
+            if (Input.IsKeyPressed(KeyCode.W))
+            {
+                pc.Position.Y -= vc.Velocity.Y * Time.DeltaTime;
+            }
 
-        if (Input.IsKeyPressed(KeyCode.D))
-        {
-            pc.Position.X += vc.Velocity.X * Time.DeltaTime;
-        }
+            if (Input.IsKeyPressed(KeyCode.S))
+            {
+                pc.Position.Y += vc.Velocity.Y * Time.DeltaTime;
+            }
 
-        engine.SetComponent<PositionComponent>(entity, pc);
+            if (Input.IsKeyPressed(KeyCode.A))
+            {
+                pc.Position.X -= vc.Velocity.X * Time.DeltaTime;
+            }
+
+            if (Input.IsKeyPressed(KeyCode.D))
+            {
+                pc.Position.X += vc.Velocity.X * Time.DeltaTime;
+            }
+
+            engine.SetComponent<PositionComponent>(entity, pc);
+        }
     }
 }

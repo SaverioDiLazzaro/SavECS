@@ -49,8 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\CollisionDataComponent.cs" />
+    <Compile Include="Systems\CollisionDetectionSystem.cs" />
+    <Compile Include="Components\BoxColliderComponent.cs" />
     <Compile Include="Components\NameComponent.cs" />
-    <Compile Include="Components\EntityHolderComponent.cs" />
+    <Compile Include="Systems\CollisionSolverSystem.cs" />
     <Compile Include="Systems\DestroyEntityWhenOutOfScreenSystem.cs" />
     <Compile Include="Enums\RenderOffset.cs" />
     <Compile Include="Components\SpriteRendererComponent.cs" />
@@ -59,7 +62,6 @@
     <Compile Include="Components\SpawnPointComponent.cs" />
     <Compile Include="Components\AIComponent.cs" />
     <Compile Include="Systems\AIMoveSystem.cs" />
-    <Compile Include="Systems\FollowEntityPositionSystem.cs" />
     <Compile Include="Systems\PlayerShootSystem.cs" />
     <Compile Include="Systems\AISpawnSystem.cs" />
     <Compile Include="Systems\PlayerMoveSystem.cs" />

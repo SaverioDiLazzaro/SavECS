@@ -2,6 +2,8 @@
 
 using OpenTK;
 
+using ECSEntity = System.Int32;
+
 public class DestroyEntityWhenOutOfScreenSystem : IECSSystem
 {
     private float extraBounds = 3f;
@@ -14,13 +16,18 @@ public class DestroyEntityWhenOutOfScreenSystem : IECSSystem
 
     int IECSSystem.ExecutionOrder => (int)SystemExecutionOrder.LateUpdate;
 
-    void IECSSystem.Execute(ECSEngine engine, int entity)
+    void IECSSystem.Execute(ECSEngine engine, ECSEntity[] entities)
     {
-        PositionComponent pc = engine.GetComponent<PositionComponent>(entity);
-
-        if (this.IsOutOfScreen(pc.Position))
+        for (int i = 0; i < entities.Length; i++)
         {
-            engine.DestroyEntity(entity);
+            ECSEntity entity = entities[i];
+
+            PositionComponent pc = engine.GetComponent<PositionComponent>(entity);
+
+            if (this.IsOutOfScreen(pc.Position))
+            {
+                engine.DestroyEntity(entity);
+            }
         }
     }
 

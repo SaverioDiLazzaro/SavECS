@@ -16,6 +16,7 @@ internal sealed class ECSComponents : Dictionary<Type, IECSComponentBuffer>
             this.Add(type, buffer);
         }
     }
+
     internal ECSEntityIndex AddComponent<T>(ECSEntity entity, T component) where T : struct, IECSComponent
     {
         Type type = typeof(T);

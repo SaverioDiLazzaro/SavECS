@@ -23,11 +23,7 @@ public sealed class ECSEngine
             IECSSystem system = this.systems[i];
             ECSEntity[] entities = this.GetAllEntitiesWithComponents(system.Filters);
 
-            for (int id = entities.Length - 1; id >= 0; id--)
-            {
-                ECSEntity entity = entities[id];
-                system.Execute(this, entity);
-            }
+            system.Execute(this, entities);
         }
     }
     #endregion
@@ -85,26 +81,25 @@ public sealed class ECSEngine
 
             this.components.RemoveComponent(type, index);
 
-            this.UpdateAllEntitiesWithComponent(entity, type);
+            this.UpdateAllEntitiesWithComponent(index, type);
         }
 
         this.entities.DestroyEntity(entity);
     }
-    private void UpdateAllEntitiesWithComponent(ECSEntity entity, Type type)
+    private void UpdateAllEntitiesWithComponent(ECSEntityIndex indexRemoved, Type type)
     {
-        if(entity == this.entities.Count - 1)
-        {
-            return;
-        }
-
-        for (int i = entity; i < this.entities.Count; i++)
+        for (int i = 0; i < this.entities.Count; i++)
         {
             if (this.entities.HasComponent(i, type))
             {
                 ECSEntityData data = this.entities[i];
                 ECSEntityIndex index = data[type];
-                index--;
-                data[type] = index;
+
+                if(index > indexRemoved)
+                {
+                    index--;
+                    data[type] = index;
+                }
             }
         }
     }
@@ -113,7 +108,7 @@ public sealed class ECSEngine
         ECSEntity[] array = new ECSEntity[0];
         int count = 0;
 
-        for (int entity = 0; entity < this.entities.Count; entity++)
+        for (int entity = this.entities.Count - 1; entity >= 0; entity--)
         {
             if (this.entities.HasComponents(entity, types))
             {
@@ -146,12 +141,29 @@ public sealed class ECSEngine
         T component = this.components.GetComponent<T>(index);
         return component;
     }
+
+    #region TO REMOVE
     public void SetComponent<T>(ECSEntity entity, T component) where T : struct, IECSComponent
     {
         int index = this.GetIndexByEntity<T>(entity);
 
         this.components.SetComponent(index, component);
     }
+    public bool HasComponent<T>(ECSEntity entity, out T component) where T : struct, IECSComponent
+    {
+        Type type = typeof(T);
+
+        if (this.entities.HasComponent(entity, type))
+        {
+            component = this.GetComponent<T>(entity);
+            return true;
+        }
+
+        component = default(T);
+        return false;
+    }
+    #endregion
+
     private ECSEntityIndex GetIndexByEntity<T>(int entity) where T : struct, IECSComponent
     {
         ECSEntityData data = this.entities[entity];

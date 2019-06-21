@@ -6,5 +6,5 @@ public interface IECSSystem
 {
     Type[] Filters { get; }
     int ExecutionOrder { get; }
-    void Execute(ECSEngine engine, ECSEntity entity);
+    void Execute(ECSEngine engine, ECSEntity[] entities);
 }
