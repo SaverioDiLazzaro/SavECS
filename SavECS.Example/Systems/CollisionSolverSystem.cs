@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using ECSEntity = System.Int32;
 
 public class CollisionSolverSystem : IECSSystem
@@ -10,6 +10,8 @@ public class CollisionSolverSystem : IECSSystem
     };
 
     int IECSSystem.ExecutionOrder => (int)SystemExecutionOrder.Physics;
+
+    List<ECSEntity> entitiesToDestroy = new List<ECSEntity>();
 
     void IECSSystem.Execute(ECSEngine engine, ECSEntity[] entities)
     {
@@ -24,8 +26,25 @@ public class CollisionSolverSystem : IECSSystem
 
             engine.DestroyEntity(entity);
 
-            engine.DestroyEntity(entity1);
-            engine.DestroyEntity(entity2);
+            if (!this.entitiesToDestroy.Contains(entity1))
+            {
+                this.entitiesToDestroy.Add(entity1);
+            }
+
+            if (!this.entitiesToDestroy.Contains(entity2))
+            {
+                this.entitiesToDestroy.Add(entity2);
+            }
         }
+
+        this.entitiesToDestroy.Sort((x1, x2) => -x1.CompareTo(x2));
+
+        for (int i = 0; i < this.entitiesToDestroy.Count; i++)
+        {
+            ECSEntity entity = this.entitiesToDestroy[i];
+            engine.DestroyEntity(entity);
+        }
+
+        this.entitiesToDestroy.Clear();
     }
 }
